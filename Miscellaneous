@@ -1,0 +1,8 @@
+### While loop read servers from list, do ssh and execute command best practice
+
+while IFS= read -r list; do ssh user1@"$list" 'echo "this is a test" | sudo tee /etc/dummy'; done < list
+
+
+### Transfer log from servers to destination
+
+for dir in * ; do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsync" user1@"$dir":/var/log/messages :/var/log/secure $dir ; done
