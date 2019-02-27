@@ -6,3 +6,7 @@ while IFS= read -r list; do ssh user1@"$list" 'echo "this is a test" | sudo tee 
 ### Transfer log from servers to destination
 
 for dir in * ; do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsync" user1@"$dir":/var/log/messages :/var/log/secure $dir ; done
+
+### Modifying by adding value to resolv.conf and leaving old value intact
+
+for i in $(cat servers_list ); do ssh $i 'cat >> /etc/resolv.conf' - <<< $'nameserver 10.1.1.1 \noptions timeout:1 attempts:1 rotate' ; done
