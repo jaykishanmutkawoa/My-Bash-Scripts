@@ -27,7 +27,7 @@ backdir="/data/deployment/$ticket"
 
 ###### Some prechecks appended to log.
 
-if ! ssh "$host" "test -e $ftpsource"; then
+if ! ssh "$host" "test -e \$ftpsource"; then
               echo "File does not seem to exist on FTP REMOTE MACHINE. Please Check Parameter to be modified section."
               exit 100
       else
