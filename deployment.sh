@@ -27,7 +27,7 @@ backdir="/data/deployment/$ticket"
 
 ###### Some prechecks appended to log.
 
-if ! ssh $host "test -e $ftpsource"; then
+if ! ssh "$host" "test -e $ftpsource"; then
               echo "File does not seem to exist on FTP REMOTE MACHINE. Please Check Parameter to be modified section."
               exit 100
       else
@@ -43,7 +43,7 @@ fi
 
 ###### Actions here after Prechecks.
 
-if ! tar -cvzf $backdir/$lmdp-$ticket-$date.tar.gz $sourcedir; then
+if ! tar -cvzf $backdir/$lmdp-$ticket-"$date".tar.gz $sourcedir; then
                 echo "backup failure"
                 exit 300
         else
@@ -51,7 +51,7 @@ if ! tar -cvzf $backdir/$lmdp-$ticket-$date.tar.gz $sourcedir; then
 
 fi
 
-if ! scp -rp $host:$ftpsource $backdir > /dev/null 2>&1; then
+if ! scp -rp "$host":$ftpsource $backdir > /dev/null 2>&1; then
                 echo "Transfered failed. Probable network error."
 		exit 400
         else
