@@ -29,7 +29,7 @@ backdir="/data/deployment/$ticket"
 
 if ! ssh "$host" "test -e \$ftpsource"; then
               echo "File does not seem to exist on FTP REMOTE MACHINE. Please Check Parameter to be modified section."
-              exit 100
+              exit 200
       else
               echo "The remote file $file is well present on FTP server."
 fi
@@ -38,14 +38,14 @@ if [ ! -d $backdir ]; then
                 mkdir -p $backdir
         else
                 echo "Directory with name $ticket already exist. Exiting now.."
-                exit 200
+                exit 201
 fi
 
 ###### Actions here after Prechecks.
 
 if ! tar -cvzf $backdir/$lmdp-$ticket-"$date".tar.gz $sourcedir; then
                 echo "backup failure"
-                exit 300
+                exit 202
         else
                 echo "Backup Successfully carried out in the directory $backdir"
 
@@ -53,7 +53,7 @@ fi
 
 if ! scp -rp "$host":$ftpsource $backdir > /dev/null 2>&1; then
                 echo "Transfered failed. Probable network error."
-		exit 400
+		exit 203
         else
                 echo "The remote file $file has been transfered succesfully to the directory $backdir"
 
@@ -61,14 +61,14 @@ fi
 
 if ! unzip -o $backdir/$file -d $sourcedir > /dev/null 2>&1; then
                 echo "Decompression failed for some reasons. Please check Disk space"
-                exit 500
+                exit 204
         else
                 echo "Decompression carried out succesfully on $sourcedir."
 fi
 
 if ! chown -R apache:apache $sourcedir > /dev/null 2>&1; then
                 echo "Chown failed for some reasons."
-                exit 600
+                exit 205
         else
                 echo "Ownerships changed succesfully on the directory $sourcedir"
 fi
