@@ -2,7 +2,6 @@
 
 while IFS= read -r list; do ssh user1@"$list" 'echo "this is a test" | sudo tee /etc/dummy'; done < list
 
-
 ### Transfer log from servers to destination
 
 for dir in * ; do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsync" user1@"$dir":/var/log/messages :/var/log/secure $dir ; done
@@ -10,3 +9,35 @@ for dir in * ; do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsync" user1@
 ### Modifying by adding value to resolv.conf and leaving old value intact
 
 for i in $(cat servers_list ); do ssh $i 'cat >> /etc/resolv.conf' - <<< $'nameserver 10.1.1.1 \noptions timeout:1 attempts:1 rotate' ; done
+
+## fuck the for loop it sucks everything in the list
+
+while IFS= read -r list; do ssh -n e0087@"$list" 'hostname -s; ls /tmp' ; done <tototest
+
+### Create three columns hostname, server from ntp and ip from resolv.conf
+
+while IFS= read -r list; do printf '%s\t%s\t%s\n' "$(ssh -n ext0087@"$list" 'hostname -s')" "$(ssh -n ext0087@"$list" 'grep -i ^server /etc/ntp.conf' | grep 'prefer\|iburst' )" "$(ssh -n ext0087@"$list" 'grep nameserver /etc/resolv.conf | grep -v ^#')" ; done <list
+
+#### Find logs apache between specific time or date. To check if $4 is really the date column as well as the format of the date is important.
+
+cat ACCESS_LOG | awk '$4 >= "09:00:00 2019" && $4 < "10:00:00"'
+
+### Modify resolv.conf with sudo right
+
+while IFS= read -r host; do ssh ext0087@"$host" 'sudo tee -a /etc/resolv.conf > /dev/null' <<< 'nameserver 10.236.22.254'; done <servers_list
+
+##### RHEL 5 SCP
+
+for i in $(cat RHEL5LIST) ; do scp /space/livraisons_l2_mru/Nitin/RHEL5/NewSNMPDPackages/snmpd.conf $i:/etc/snmp/snmpd.conf  ; done
+
+##### for loop with sudo
+
+for i in $(cat solaris); do ssh ext0087@$i sudo " cat /etc/inet/ntp.conf" ; done
+
+### rsync file with sudo
+
+for i in $(cat solaris); do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsync" resolv.conf ext0087@"$i":/etc/resolv.conf ; done
+
+### restart service with sudo on solaris
+
+for i in $(cat solaris); do ssh ext0087@"$i" 'sudo /usr/sbin/svcadm enable svc:/network/ntp' ; done
