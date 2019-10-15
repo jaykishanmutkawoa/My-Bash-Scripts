@@ -8,7 +8,11 @@
 
 file="$1"
 
-if [ -f "$file" ];
+if [ "$#" -ne 1 ]
+	then
+echo "Please enter a file name"
+exit 100
+elif [ -f "$file" ];
 	then
 echo "$file exist on the machine"
 	else
