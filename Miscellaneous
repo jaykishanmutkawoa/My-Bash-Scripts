@@ -41,3 +41,7 @@ for i in $(cat solaris); do rsync -ivap -e "ssh" --rsync-path="sudo /usr/bin/rsy
 ### restart service with sudo on solaris
 
 for i in $(cat solaris); do ssh ext0087@"$i" 'sudo /usr/sbin/svcadm enable svc:/network/ntp' ; done
+
+### Get Hidden file size
+
+du -sch .[!.]* * |sort -h
