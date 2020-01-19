@@ -5,4 +5,7 @@ Repository for my Bash scripts
 - Basic bash script to transfer from FTP to webserver
 
 2. McAfeeModuleRecompile.sh
-- Recompile McAfee Module with same kernel version 
+- Recompile McAfee Module with same kernel version
+
+3. Int.sh
+- Interactive script reference point 
