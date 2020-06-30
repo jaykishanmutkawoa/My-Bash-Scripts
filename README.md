@@ -37,5 +37,8 @@ Repository for my Bash scripts
 12. pre-reboot-info.sh
 - Script to take some trace of process, netstat, etc.. 
 
+13. AppRedisOtherBackup.sh
+- Doing backup of Redis, apps and other db
 
-- Miscellaneous file contains some commands for reference - one line script 
+14. Miscellanous
+- Miscellaneous file contains some commands for reference - one line script
