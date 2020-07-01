@@ -1,10 +1,11 @@
+#!/usr/bin/bash
+
 # Author: jmutkawoa@cyberstorm.mu
 # bash script to check if file exist or not
 
 # To launch it just point the script to the file. Example:
 # ./CheckIfFileExist.sh ./location/of/your/file
 
-#!/usr/bin/bash
 
 file="$1"
 
