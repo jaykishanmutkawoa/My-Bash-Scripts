@@ -28,7 +28,7 @@ fi
 
 ## Backup of mysql
 
-if ! /usr/bin/mysql -N -e 'show databases' | while read dbname;
+if ! /usr/bin/mysql -N -e 'show databases' | while read -r dbname;
         do mysqldump --complete-insert --routines --triggers --single-transaction "$dbname" > "$BackDirDate/$dbname".sql; done ; then
 echo "error"
 exit
